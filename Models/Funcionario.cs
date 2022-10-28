@@ -22,6 +22,11 @@ namespace supra.Models
         [StringLength(100)]
         public string Sobrenome { get; set; }
 
+        [Required(ErrorMessage = "Informe o telefone.")]
+        [Display(Name = "Digite o telefone. ")]
+        [StringLength(100)]
+        public string Telefone { get; set; }
+
         [Required(ErrorMessage = "Informe o cargo.")]
         [Display(Name = "Digite o cargo. ")]
         [StringLength(100)]
@@ -38,7 +43,7 @@ namespace supra.Models
         [StringLength(100)]
         public string Senha { get; set; }
 
-        public int ProducaoId { get; set; }
+        //public int ProducaoId { get; set; }
 
         public List<Producao> Producoes { get; set; }
 

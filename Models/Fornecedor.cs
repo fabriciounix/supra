@@ -35,7 +35,7 @@ namespace supra.Models
         [StringLength(10)]
         public string tipo { get; set; }
 
-        public int ProdutoId { get; set; }
+        //public int ProdutoId { get; set; }
 
         public List<Produto> Produtos { get; set; }
     }
