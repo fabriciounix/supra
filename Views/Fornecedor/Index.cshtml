@@ -1,0 +1,57 @@
+@model IEnumerable<supra.Models.Fornecedor>
+
+@{
+    ViewData["Title"] = "Fornecedores";
+}
+
+<p>
+    <a asp-area="" asp-controller="Fornecedor" asp-action="Create">Cadastrar Fornecedor</a>
+</p>
+
+          
+<!-- #Aquei começa o código da página-->
+<table class="table">
+    <thead>
+        <tr>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.razao_social)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.cnpj)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.telefone)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.tipo)
+            </th>
+        </tr>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.razao_social)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.cnpj)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.telefone)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.tipo)
+                    </td>
+                </tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FornecedorId">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.FornecedorId">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.FornecedorId">Deletar</a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>

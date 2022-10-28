@@ -1,0 +1,51 @@
+@model supra.Models.Fornecedor
+
+@{
+    ViewData["Title"] = "Detalhes";
+}
+
+<h3 class="text-center text-primary">Detalhes</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.razao_social)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.razao_social)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.cnpj)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.cnpj)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.tipo)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.tipo)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.telefone)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.telefone)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.dt)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.dt)
+        </dd>
+
+    </dl>
+</div>
+<hr />
+<div>
+    <a asp-action="Index" class="btn btn-outline-info">Retornar</a>
+</div>

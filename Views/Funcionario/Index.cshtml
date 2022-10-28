@@ -1,0 +1,66 @@
+@model IEnumerable<supra.Models.Funcionario>
+
+@{
+    ViewData["Title"] = "Funcionários";
+}
+
+<p>
+    <a asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a>
+</p>
+
+          
+<!-- #Aquei começa o código da página-->
+<table class="table">
+    <thead>
+        <tr>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.Sobrenome)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.Cargo)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th class="bg-dark text-light">
+               @Html.DisplayNameFor(model => model.Dt)
+            </th>
+        </tr>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Sobrenome)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Telefone)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Cargo)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Login)
+                    </td>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Dt)
+                    </td>
+                </tr>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.FuncionarioId">Editar</a>
+                    <a asp-action="Details" asp-route-id="@item.FuncionarioId">Detalhes</a>
+                    <a asp-action="Delete" asp-route-id="@item.FuncionarioId">Deletar</a>
+                </td>
+            }
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,45 @@
+@model supra.Models.Funcionario
+
+@{
+    ViewData["Title"] = "Deletar";
+}
+
+<h3 class="text-center text-primary">Deseja Deletar este Funcionário?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Sobrenome)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Sobrenome)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Cargo)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Cargo)
+        </dd>
+
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+    </dl>
+    <hr />
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="FuncionarioId" />
+        <input type="submit" value="Deletar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-outline-info">Retornar</a>
+    </form>
+</div>
