@@ -25,6 +25,10 @@ namespace supra.Models
 
         public string Observacao { get; set; }
 
+        public int Quantidade { get; set; }
+
+       // public int ProducaoId { get; set; }
+
         public int CategoriaId { get; set; }
 
         public virtual Categoria Categoria { get; set; }

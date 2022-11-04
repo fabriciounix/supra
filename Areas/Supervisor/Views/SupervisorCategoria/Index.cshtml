@@ -1,0 +1,42 @@
+@model IEnumerable<supra.Models.Categoria>
+
+@{
+    Layout = "_Layout";
+}
+
+<p>
+    <a asp-area="Supervisor" asp-controller="SupervisorCategoria" asp-action="Create">Cadastrar Categoria</a>
+</p>
+<p>
+    <a asp-area="" asp-controller="Categoria" asp-action="Create">Cadastrar Categoria</a>
+</p>
+
+
+          
+<!-- #Aquei começa o código da página-->
+<table class="table">
+    <thead>
+        <tr>
+            <th class="bg-dark text-light">
+                Descrição
+            </th>
+        </tr>
+        <th></th>
+    </thead>
+    <tbody>
+        <tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td class="bg-primary text-light">
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </td>
+                </tr>
+            }
+        </tr>
+    </tbody>
+</table>
+              
+<!-- #aqui termina o código da página -->
+
+

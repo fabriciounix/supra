@@ -2,14 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 using supra.Context;
 using supra.Models;
 
 namespace supra.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FornecedorController : Controller
     {
         private readonly AppDbContext _context;
@@ -19,12 +22,35 @@ namespace supra.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Fornecedors.ToListAsync());
-        }
-        
 
+        //  public async Task<IActionResult> Index()
+        //   {
+        //      return View(await _context.Fornecedors.ToListAsync());
+        //  }
+
+        public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "razao_social")
+        {
+            // aqui o comando AsNoTracking faz a lista do todos os itens, e AsQuerible converte os dados para transfomar em uma consulta
+            var resultado = _context.Fornecedors.AsNoTracking().AsQueryable();
+
+            //aqui faz a pesquisa
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.razao_social.Contains(filter));
+            }
+
+            //Aqui define o que eu quero pesquisar, a quantidade da paginação, o pageindex que é 1 e ordena pela Descrição
+            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "razao_social");
+            //aqui adiciona uma rota 
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            //aqui retorna o model na view
+            return View(model);
+
+
+        }
+
+        
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,12 +68,13 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
-
+        [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
 
+        
         [HttpPost]
 
         public async Task<IActionResult> Create([Bind("razao_social,cnpj,telefone,tipo,dt")] Fornecedor fornecedor)
@@ -61,6 +88,7 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
+       
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,6 +104,7 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
+       
         [HttpPut]
 
         public async Task<IActionResult> Edit(int id, [Bind("FornecedorId,razao_social,cnpj,telefone,tipo,dt")] Fornecedor fornecedor)
@@ -109,6 +138,7 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
+       
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,6 +155,7 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
+      
         [HttpPost, ActionName("Delete")]
 
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -3,26 +3,50 @@ using supra.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using ReflectionIT.Mvc.Paging;
 
 namespace supra.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class FuncionarioController : Controller
     {
 
         private readonly AppDbContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public FuncionarioController(AppDbContext context)
+        public FuncionarioController(AppDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+      //  public async Task<IActionResult> Index()
+     //   {
+     //     return View(await _context.Funcionarios.ToListAsync());
+     //    }
+
+         public async Task<IActionResult> Index(string filter, int pageindex = 1, string sort = "Nome")
         {
-            return View(await _context.Funcionarios.ToListAsync());
-        }
 
-        // GET: Admin/AdminCategorias/Details/5
+            var resultado = _context.Funcionarios.AsNoTracking().AsQueryable();
+
+            //aqui faz a pesquisa
+            if (!string.IsNullOrWhiteSpace(filter))
+            {
+                resultado = resultado.Where(p => p.Nome.Contains(filter));
+            }
+
+
+            var model = await PagingList.CreateAsync(resultado, 5, pageindex, sort, "Nome");
+
+            model.RouteValue = new RouteValueDictionary { { "filter", filter } };
+
+            return View(model);
+
+
+        }
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -55,6 +79,10 @@ namespace supra.Controllers
             {
                 _context.Add(funcionario);
                 await _context.SaveChangesAsync();
+
+                var user = new IdentityUser { UserName = funcionario.Login};
+                var result = _userManager.CreateAsync(user, funcionario.Senha);
+                await _userManager.AddToRoleAsync(user, "Member");
                 return RedirectToAction(nameof(Index));
             }
             return View(funcionario);

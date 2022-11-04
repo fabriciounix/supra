@@ -1,0 +1,85 @@
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - supra</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/master.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/supra.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <div class="col-sm-12 col-md-12 col-lg-12 text-center">
+            <img src="~/img/limao.png" class="img_limao">
+            <span class="supra_topo_um">Supra</span><span class="supra_topo_dois">Citrus</span>
+        </div>
+    <!--    <div class="col-sm-12 col-md-6 col-lg-6">
+            @HttpContextAccessor.HttpContext.Session.GetString("NomeUsuarioLogado")
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <a asp-area="" asp-controller="Login" asp-action="Sair">Sair</a>
+        </div> -->
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SupraCitrus</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @await Html.PartialAsync("_LoginPartial")
+                        @if (User.IsInRole("Admin"))
+                        {
+                                <a class="nav-link text-primary" asp-area="Supervisor" asp-controller="Supervisor" asp-action="Index">Admin</a>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+     <div class="row">
+            <ul class="nav mg_nav mg_esq">
+                <li class="nav-item segundo_menu"><a asp-area="" asp-controller="Funcionario" asp-action="Index" ><img src="img/funcionarios.png"
+                            width="50px" /> </a>Funcionários</li>
+                <li class="nav-item segundo_menu"><a asp-area="" asp-controller="Fornecedor" asp-action="Index"><img src="img/fornecedores.png"
+                            width="50px" /></a>Fornecedores</li>
+                <li class="nav-item segundo_menu"><a asp-area="" asp-controller="Produto" asp-action="Index" ><img src="img/produtos.png"
+                            width="50px" /></a>Produtos</li>
+                <li class="nav-item segundo_menu">
+                    <a asp-area="" asp-controller="Categoria" asp-action="Index">
+                        <img src="img/categorias.jpg"
+                            width="50px" /></a>
+                    <a class="nav-link text-dark" >Categorias</a>
+                    
+                           </li>
+                <li class="nav-item segundo_menu"><a asp-area="" asp-controller="Producao" asp-action="Index"><img src="img/producao.png"
+                            width="50px" /></a>Produção</li>
+                
+            </ul>
+        </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - supra - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
