@@ -36,5 +36,7 @@ namespace supra.Models
         public int FornecedorId { get; set; }
 
         public virtual Fornecedor Fornecedor { get; set; }
+
+        public List<Producao> Producaos { get; set; }
     }
 }

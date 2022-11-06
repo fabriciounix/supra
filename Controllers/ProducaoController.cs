@@ -12,7 +12,7 @@ using supra.Models;
 
 namespace supra.Controllers
 {
-    [Authorize(Roles = "Admin")]
+  //  [Authorize(Roles = "Admin")]
 
     public class ProducaoController : Controller
     {
@@ -76,13 +76,20 @@ namespace supra.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Create([Bind("ProducaoId,Dt,Nome,Descricao,Quantidade,Observacoes,Total_Notas,Status,FuncionarioId,ProdutoId")] Producao producao)
+        public async Task<IActionResult> Create([Bind("Nome,Descricao,Quantidade,Observacoes,Total_Notas,Status,FuncionarioId,ProdutoId,Dt")] Producao producao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(producao);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var produtoEstoque = _context.Produtos.Where(p => p.Descricao.Equals(producao.Descricao) && producao.Quantidade <= p.Quantidade).FirstOrDefault();
+              
+                if (produtoEstoque != null)
+                {
+                    AtualizaProduto(producao.Quantidade,producao.ProdutoId);
+                    _context.Add(producao);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+               
             }
            
             return View(producao);
@@ -109,7 +116,7 @@ namespace supra.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProducaoId,Dt,Nome,Descricao,Quantidade,Observacoes,Total_Notas,Status,FuncionarioId,ProdutoId")] Producao producao)
+        public async Task<IActionResult> Edit(int id, [Bind("ProducaoId,Nome,Descricao,Quantidade,Observacoes,Total_Notas,Status,FuncionarioId,ProdutoId,Dt")] Producao producao)
         {
             if (id != producao.ProducaoId)
             {
@@ -169,6 +176,21 @@ namespace supra.Controllers
         private bool ProducaoExists(int id)
         {
             return _context.Producaos.Any(e => e.ProducaoId == id);
+        }
+
+        private void AtualizaProduto(int Quantidade, int Id)
+        {
+            Produto prodt = _context.Produtos.Where(p => p.ProdutoId == Id).FirstOrDefault();
+            prodt.Categoria = prodt.Categoria;
+            prodt.Descricao = prodt.Descricao;
+            prodt.dt = prodt.dt;
+            prodt.Observacao = prodt.Observacao;
+            prodt.Quantidade = prodt.Quantidade - Quantidade;
+            prodt.CategoriaId = prodt.CategoriaId;
+            prodt.FornecedorId = prodt.FornecedorId;
+            _context.Update(prodt);
+            _context.SaveChanges();
+
         }
 
     }

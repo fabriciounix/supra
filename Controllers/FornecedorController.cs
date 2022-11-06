@@ -12,7 +12,7 @@ using supra.Models;
 
 namespace supra.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class FornecedorController : Controller
     {
         private readonly AppDbContext _context;
@@ -104,8 +104,8 @@ namespace supra.Controllers
             return View(fornecedor);
         }
 
-       
-        [HttpPut]
+
+        [HttpPost]
 
         public async Task<IActionResult> Edit(int id, [Bind("FornecedorId,razao_social,cnpj,telefone,tipo,dt")] Fornecedor fornecedor)
         {

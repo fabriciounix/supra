@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace supra.Context
 {
-    public class AppDbContext : IdentityDbContext<IdentityUser>
+    public class AppDbContext :  IdentityDbContext<IdentityUser> //DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) :base(options)
         {

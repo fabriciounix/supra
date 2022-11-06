@@ -13,7 +13,7 @@ namespace supra.Models
         [Required(ErrorMessage = "Informe a data.")]
         [Display(Name = "Digite a data atual.")]
         [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime Dt { get; set; }
+       public DateTime Dt { get; set; }
 
         [Required(ErrorMessage = "Informe o nome.")]
         [Display(Name = "Digite o nome.")]
@@ -25,11 +25,11 @@ namespace supra.Models
         [StringLength(100)]
         public string Descricao { get; set; }
 
-        [Required(ErrorMessage = "Informe a Quantidade.")]
-        [Display(Name = "Digite a quantidade.")]
-        [StringLength(100)]
-
         public int Quantidade { get; set; }
+
+        [Required(ErrorMessage = "Informe a descrição.")]
+        [Display(Name = "Digite a descrição.")]
+        [StringLength(100)]
 
         public string Observacoes { get; set; }
 
@@ -43,7 +43,7 @@ namespace supra.Models
 
         public int ProdutoId { get; set; }
 
-        public List<Produto> Produtos { get; set; }
+        public virtual Produto Produtos { get; set; }
 
 
     }

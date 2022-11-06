@@ -13,7 +13,7 @@ using supra.Models;
 
 namespace supra.Controllers
 {
-    [Authorize(Roles = "Admin")]
+   // [Authorize(Roles = "Admin")]
     public class CategoriaController : Controller
     {
         private readonly AppDbContext _context;

@@ -12,7 +12,7 @@ using supra.Models;
 
 namespace supra.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ProdutoController : Controller
     {
         private readonly AppDbContext _context;
@@ -74,7 +74,7 @@ namespace supra.Controllers
 
         [HttpPost]
 
-        public async Task<IActionResult> Create([Bind("ProdutoId", "Descricao", "Observacao", "dt", "CategoriaId", "FornecedorId")] Produto produto)
+        public async Task<IActionResult> Create([Bind("ProdutoId", "Descricao","Quantidade", "Observacao", "dt", "CategoriaId", "FornecedorId")] Produto produto)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +105,7 @@ namespace supra.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProdutoId", "Descricao", "Observacao", "dt", "CategoriaId", "FornecedorId")] Produto produto)
+        public async Task<IActionResult> Edit(int id, [Bind("ProdutoId", "Descricao", "Quantidade","Observacao", "dt", "CategoriaId", "FornecedorId")] Produto produto)
         {
             if (id != produto.ProdutoId)
             {
